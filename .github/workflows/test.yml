@@ -28,4 +28,4 @@ jobs:
       # Runs a single command using the runners shell
       - name: list all the files under Github workspace
         run: |
-          ls ${{ github.workspace }}
+          echo $GITHUB_SHA

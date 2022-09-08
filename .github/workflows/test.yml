@@ -30,3 +30,4 @@ jobs:
         run: |
           echo ${GITHUB_SHA:0:7}
           echo ${{github.event.pull_request.head.sha}}
+          echo $GITHUB_ACTION_REPOSITORY

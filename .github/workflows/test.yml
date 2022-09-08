@@ -28,5 +28,5 @@ jobs:
       # Runs a single command using the runners shell
       - name: list all the files under Github workspace
         run: |
-          echo $GITHUB_SHA
+          echo ${GITHUB_SHA:0:7}
           echo ${{github.event.pull_request.head.sha}}

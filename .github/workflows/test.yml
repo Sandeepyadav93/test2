@@ -26,6 +26,11 @@ jobs:
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
-      - name: Create a file for a test
+      - name: Revert CRC to Snapshot
         run: |
-          echo $GITHUB_WORKSPACE > /tmp/test_sandeep
+          sudo virsh destry crc
+          virsh snapshot-revert --domain crc --snapshotname crc-snapshot
+          
+      - name: Start the CRC node
+        run: |          
+          ansible-playbook -i inventory ${{ github.workspace }}/ci/start_crc.yaml -vv

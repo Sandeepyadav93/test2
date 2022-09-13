@@ -33,4 +33,11 @@ jobs:
           
       - name: Start the CRC node
         run: |          
-          ansible-playbook -i inventory ${{ github.workspace }}/ci/start_crc.yaml -vv
+          crc start --log-level debug
+          crc status
+          
+      - name: Pre-test to check if oc commands are working
+        run: |
+          eval $(crc oc-env)
+          oc login -u kubeadmin -p 12345678 https://api.crc.testing:6443
+          oc whoami        

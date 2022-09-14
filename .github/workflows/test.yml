@@ -29,3 +29,4 @@ jobs:
       - name: Revert CRC to Snapshot
         run: |
           sudo virsh list --all
+          sudo virsh snapshot-revert --domain crc --snapshotname crc-snapshot

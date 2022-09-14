@@ -28,15 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Revert CRC to Snapshot
         run: |
-          virsh snapshot-revert --domain crc --snapshotname crc-snapshot
+          value="hello"
+          echo $value
           
       - name: Start the CRC node
         run: |          
-          crc start --log-level debug
-          crc status
-          
-      - name: Pre-test to check if oc commands are working
-        run: |
-          eval $(crc oc-env)
-          oc login -u kubeadmin -p 12345678 https://api.crc.testing:6443
-          oc whoami        
+          echo $value

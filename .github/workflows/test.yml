@@ -28,9 +28,4 @@ jobs:
       # Runs a single command using the runners shell
       - name: Revert CRC to Snapshot
         run: |
-          value="hello"
-          echo $value
-          
-      - name: Start the CRC node
-        run: |          
-          echo $value
+          sudo virsh list --all

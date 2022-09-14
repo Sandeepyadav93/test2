@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Revert CRC to Snapshot
         run: |
+          sudo virsh destroy crc
           sudo virsh snapshot-revert --domain crc --snapshotname crc-snapshot
           
       - name: Start CRC node

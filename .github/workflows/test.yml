@@ -33,6 +33,7 @@ jobs:
       - name: Start CRC node
         run: |
           crc start --log-level debug
+          sleep 60
 
       - name: Log in to OpenShift
         uses: redhat-actions/oc-login@v1

@@ -33,6 +33,6 @@ jobs:
           openshift_password: 12345678
           insecure_skip_tls_verify: true
           
-      - name: Just trying some oc commands
+      - name: Install Operators
         run: |
-          oc get pods
+          bash $HOME/install_operator.sh

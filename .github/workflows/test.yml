@@ -32,3 +32,7 @@ jobs:
           openshift_username: kubeadmin
           openshift_password: 12345678
           insecure_skip_tls_verify: true
+          
+      - name: Just trying some oc commands
+        run: |
+          oc get pods

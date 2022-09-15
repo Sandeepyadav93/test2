@@ -25,6 +25,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Revert CRC to Snapshot
+        run: |
+          sudo virsh destroy crc
+          sudo virsh snapshot-revert --domain crc --snapshotname crc-snapshot
+          
+      - name: Start CRC node
+        run: |
+          crc start --log-level debug
+
       - name: Log in to OpenShift
         uses: redhat-actions/oc-login@v1
         with:

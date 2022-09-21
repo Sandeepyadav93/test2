@@ -21,8 +21,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: print hostname
-        run: |
-          hostname
-          sleep 120
-          echo hello
+      - name: print shell
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 10     
+          command: |
+            echo $SHELL

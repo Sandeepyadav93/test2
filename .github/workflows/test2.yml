@@ -27,4 +27,5 @@ jobs:
           timeout_minutes: 10
           max_attempts: 10     
           command: |
-            echo $SHELL
+            pushd /tmp
+            popd

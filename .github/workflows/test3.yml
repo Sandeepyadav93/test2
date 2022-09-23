@@ -121,7 +121,7 @@ jobs:
         password: ${{ secrets.QUAY_PASSWORD }}
 
   build-operator-index:
-    needs: [ check-secrets, build-${{ inputs.operator_name }}-bundle ]
+    needs: [ check-secrets, build-operator-bundle ]
     name: ${{ inputs.operator_name }}-index
     runs-on: ubuntu-latest
     if: needs.check-secrets.outputs.have-secrets == 'true'

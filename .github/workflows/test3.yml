@@ -104,13 +104,14 @@ jobs:
       uses: tj-actions/branch-names@v5
 
     - name: Build ${{ inputs.operator_name }}-bundle using buildah
-      id: build-${{ inputs.operator_name }}-bundle
+      id: build-operator-bundle
       uses: redhat-actions/buildah-build@v2
       with:
         image: ${{ inputs.operator_name }}-bundle
         tags: ${{ github.sha }}
         containerfiles: |
           ./bundle.Dockerfile
+          
     - name: Push ${{ inputs.operator_name }} To ${{ env.imageregistry }}
       uses: redhat-actions/push-to-registry@v2
       with:

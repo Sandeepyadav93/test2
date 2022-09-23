@@ -120,7 +120,7 @@ jobs:
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
 
-  build-${{ inputs.operator_name }}-index:
+  build-operator-index:
     needs: [ check-secrets, build-${{ inputs.operator_name }}-bundle ]
     name: ${{ inputs.operator_name }}-index
     runs-on: ubuntu-latest

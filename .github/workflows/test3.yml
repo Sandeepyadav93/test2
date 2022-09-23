@@ -114,8 +114,8 @@ jobs:
     - name: Push ${{ inputs.operator_name }} To ${{ env.imageregistry }}
       uses: redhat-actions/push-to-registry@v2
       with:
-        image: ${{ steps.build-${{ inputs.operator_name }}-bundle.outputs.image }}
-        tags: ${{ steps.build-${{ inputs.operator_name }}-bundle.outputs.tags }}
+        image: ${{ steps.build-operator-bundle.outputs.image }}
+        tags: ${{ steps.build-operator-bundle.outputs.tags }}
         registry:  ${{ env.imageregistry }}/${{ env.imagenamespace }}
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}

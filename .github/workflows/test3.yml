@@ -59,3 +59,112 @@ jobs:
         registry: ${{ env.imageregistry }}/${{ env.imagenamespace }}
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
+
+  build-operator-bundle:
+    needs: [ check-secrets, build-operator ]
+    name: ${{ inputs.operator_name }}-bundle
+    runs-on: ubuntu-latest
+    if: needs.check-secrets.outputs.have-secrets == 'true'
+
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18.x
+
+    - name: Checkout ${{ inputs.operator_name }} repository
+      uses: actions/checkout@v2
+
+    - name: Install operator-sdk
+      uses: redhat-actions/openshift-tools-installer@v1
+      with:
+        source: github
+        operator-sdk: '1.22.1'
+
+    - name: Log in to Quay Registry
+      uses: redhat-actions/podman-login@v1
+      with:
+        registry: ${{ env.imageregistry }}
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+    - name: Create bundle image
+      run: |
+        pushd "${GITHUB_WORKSPACE}"/.github/
+        chmod +x "create_bundle.sh"
+        "./create_bundle.sh"
+        popd
+      env:
+        REGISTRY:  ${{ env.imageregistry }}/${{ env.imagenamespace }}
+        GITHUB_SHA: ${{ github.sha }}
+        BASE_IMAGE: ${{ inputs.operator_name }}
+
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v5
+
+    - name: Build ${{ inputs.operator_name }}-bundle using buildah
+      id: build-${{ inputs.operator_name }}-bundle
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: ${{ inputs.operator_name }}-bundle
+        tags: ${{ github.sha }}
+        containerfiles: |
+          ./bundle.Dockerfile
+    - name: Push ${{ inputs.operator_name }} To ${{ env.imageregistry }}
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-${{ inputs.operator_name }}-bundle.outputs.image }}
+        tags: ${{ steps.build-${{ inputs.operator_name }}-bundle.outputs.tags }}
+        registry:  ${{ env.imageregistry }}/${{ env.imagenamespace }}
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+  build-${{ inputs.operator_name }}-index:
+    needs: [ check-secrets, build-${{ inputs.operator_name }}-bundle ]
+    name: ${{ inputs.operator_name }}-index
+    runs-on: ubuntu-latest
+    if: needs.check-secrets.outputs.have-secrets == 'true'
+
+    steps:
+    - name: Checkout ${{ inputs.operator_name }} repository
+      uses: actions/checkout@v2
+
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v5
+
+    - name: Install opm
+      uses: redhat-actions/openshift-tools-installer@v1
+      with:
+        source: github
+        opm: 'latest'
+
+    - name: Log in to Red Hat Registry
+      uses: redhat-actions/podman-login@v1
+      with:
+        registry: ${{ env.imageregistry }}
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}
+
+    - name: Create index image
+      run: |
+        pushd "${GITHUB_WORKSPACE}"/.github/
+        chmod +x "create_opm_index.sh"
+        "./create_opm_index.sh"
+        popd
+      env:
+        REGISTRY:  ${{ env.imageregistry }}/${{ env.imagenamespace }}
+        GITHUB_SHA: ${{ github.sha }}
+        BUNDLE_IMAGE: ${{ inputs.operator_name }}-bundle
+        INDEX_IMAGE_TAG: ${{ github.sha }}
+        INDEX_IMAGE: ${{ inputs.operator_name }}-index
+
+    - name: Push ${{ inputs.operator_name }}-index To ${{ env.imageregistry }}
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ inputs.operator_name }}-index
+        tags: ${{ github.sha }}
+        registry:  ${{ env.imageregistry }}/${{ env.imagenamespace }}
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_PASSWORD }}

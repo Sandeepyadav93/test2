@@ -16,9 +16,15 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: openstack-k8s-operators/openstack-operator
-        
+
+    - name: print custom-bundle.Dockerfile
+      run: |
+        cat "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
+
     - name: Edit custom-bundle.Dockerfile
       run: |
-        sed "s/quay.io\/openstack-k8s-operators\/keystone-operator-bundle:latest/quay.io\/${{ env.imagenamespace }}\/keystone-operator-bundle:test/" "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
-        cat "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
+        sed "s/quay.io\/openstack-k8s-operators\/keystone-operator-bundle:latest/quay.io\/sandyada\/keystone-operator-bundle:test/" "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
     
+    - name: print custom-bundle.Dockerfile
+      run: |
+        cat "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile

@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main" ]
     
+env:
+  TEST_QUAY_USERNAME: sandyada   
+    
 jobs:    
   build-openstack-operator:
     name: Build openstack-operator image using buildah
@@ -14,5 +17,8 @@ jobs:
       with:
         repository: openstack-k8s-operators/openstack-operator
         
-        
+    - name: Edit custom-bundle.Dockerfile
+      run: |
+        sed "s/quay.io\/openstack-k8s-operators\/keystone-operator-bundle:latest/quay.io\/${{ env.imagenamespace }}\/keystone-operator-bundle:test/" "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
+        cat "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
     

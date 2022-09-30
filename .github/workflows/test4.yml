@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:    
+  build-openstack-operator:
+    name: Build openstack-operator image using buildah
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: openstack-k8s-operators/openstack-operator
+        
+        
+    

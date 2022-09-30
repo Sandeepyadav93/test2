@@ -23,7 +23,7 @@ jobs:
 
     - name: Edit custom-bundle.Dockerfile
       run: |
-        sed -i "s/quay.io\/openstack-k8s-operators\/keystone-operator-bundle:latest/quay.io\/sandyada\/keystone-operator-bundle:test/" "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
+        sed -i "s/quay.io\/openstack-k8s-operators\/keystone-operator-bundle:latest/quay.io\/${{ env.TEST_QUAY_USERNAME }}\/keystone-operator-bundle:test/" "${GITHUB_WORKSPACE}"/custom-bundle.Dockerfile
     
     - name: print custom-bundle.Dockerfile
       run: |

@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: ls -al ${{ github.repository }}
+      - run: ls -al "$GITHUB_WORKSPACE"
 
 
 

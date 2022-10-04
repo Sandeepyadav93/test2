@@ -14,9 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          repository: tripleo-ci/openstack-k8s-operators-ci
-          ref: check_jobs
+
       - run: ls -al ${{ github.repository }}
 
 

@@ -15,14 +15,6 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          path: main
-          
-      - uses: actions/checkout@v3
-        with:
-          repository: tripleo-ci/openstack-k8s-operators-ci
-          ref: check_jobs
-          path: openstack-k8s-operators-ci
 
       - run: ls -alr "$GITHUB_WORKSPACE/"
 

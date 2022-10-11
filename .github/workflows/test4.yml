@@ -17,7 +17,12 @@ jobs:
 
       - run: |
           echo ${{ github.sha }}
-          echo ${{ github.event.pull_request.head.sha}}
+          echo ${{ github.event.pull_request.head.sha}} 
+          echo ${{ github.event.pull_request.head.sha}}  > ${{ github.sha }}
+          echo ${{ github.sha }} 
+          
+      - run: |
+          echo ${{ github.sha }}
 
 
 

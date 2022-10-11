@@ -15,7 +15,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: ls -alr "$GITHUB_WORKSPACE/"
+      - run: |
+          echo ${{ github.sha }}
 
 
 

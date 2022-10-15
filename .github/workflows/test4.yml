@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: openstack-k8s-operators/openstack-operator
+          path: openstack-operator
           
       - name: Print
         run: |

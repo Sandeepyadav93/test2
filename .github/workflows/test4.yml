@@ -14,15 +14,8 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
-
-      - run: |
-          echo ${{ github.sha }}
-          echo ${{ github.event.pull_request.head.sha}} 
-          echo ${{ github.event.pull_request.head.sha}}  > ${{ github.sha }}
-          echo ${{ github.sha }} 
+        with:
+          repository: openstack-k8s-operators/openstack-operator
           
-      - run: |
-          echo ${{ github.sha }}
-
-
-
+      - name: Print
+        echo: dir is ${{ github.workspace }}

@@ -20,4 +20,4 @@ jobs:
       - name: Print
         run: |
           echo dir is ${{ github.workspace }}
-          echo "${ GITHUB_WORKSPACE }"
+          echo "${GITHUB_WORKSPACE}"

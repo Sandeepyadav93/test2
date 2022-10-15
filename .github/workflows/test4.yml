@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     
 env:
   TEST_QUAY_USERNAME: sandyada   

@@ -21,3 +21,4 @@ jobs:
         run: |
           echo dir is ${{ github.workspace }}
           echo "${GITHUB_WORKSPACE}"
+          ls ${{ github.workspace }}

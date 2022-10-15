@@ -18,4 +18,5 @@ jobs:
           repository: openstack-k8s-operators/openstack-operator
           
       - name: Print
-        echo: dir is ${{ github.workspace }}
+        run: |
+          echo: dir is ${{ github.workspace }}

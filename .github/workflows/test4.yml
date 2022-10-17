@@ -11,7 +11,11 @@ jobs:
     name: Build openstack-operator image using buildah
     runs-on: ubuntu-latest
 
-    steps:           
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18    
       - name: Print
         run: |
           go version

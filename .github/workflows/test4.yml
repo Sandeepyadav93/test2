@@ -11,20 +11,7 @@ jobs:
     name: Build openstack-operator image using buildah
     runs-on: ubuntu-latest
 
-    steps: 
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          repository: openstack-k8s-operators/openstack-operator
-          
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          repository: openstack-k8s-operators/keystone-operator
-          path: keystone-operator          
-          
+    steps:           
       - name: Print
         run: |
-          echo dir is ${{ github.workspace }}
-          echo "${GITHUB_WORKSPACE}"
-          ls ${{ github.workspace }}
+          echo ${GITHUB_REF##*/}

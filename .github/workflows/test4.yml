@@ -14,4 +14,4 @@ jobs:
     steps:           
       - name: Print
         run: |
-          echo ${GITHUB_REF##*/}
+          go version
